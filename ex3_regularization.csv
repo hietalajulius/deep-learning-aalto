@@ -1,0 +1,42 @@
+0
+"""Returns: True if training should be stopped: when the validation error is larger than the best validation error obtained so far (with given tolearance) for patience epochs.""
+
+Does this mean patience consecutive epochs or just overall?"
+@Alexander Ilin Validation for the first subassignment does not work as the code runs too long. Does that matter for submitting?
+@Alexander Ilin can you respond to this? have you fixed it? should we all fetch again?
+"@Max Christoph Udri Hi, the behaviour you described is perfectly correct. In your example, we will stop in period 10. The logic behind resetting the counter is to make sure we can actually learn something without stopping after several non-consecutive unsuccessful attempts. Consider the case, where your validation error on average goes down within 100 epochs and then goes up for another 20. Also, due to the nature of data, there are some unusual observations where model makes huge mistakes. Suppose, they happen, on average, once in 10 epochs. Now if we set patience to 5, and **do not** reset the counter, we will eventually stop learning after just 50 iterations, simply because we accumulated those random errors. If we **reset** the counter, we will naturally be looking for steady consecutive growth of validation  error and will stop after 100 + patience epochs."
+Anyone else having trouble in validating 31?
+Are we allowed to add some code (variables initialization) to the __init__ method of EarlyStopping class?
+"Can someone explain to me what's happening here. I might be missing something, but isn't this snippet potentially causing information from test set to bleed into the validation set?
+# Let us split the data into training, validation and test sets and plot the training and validation sets
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=1, shuffle=True)
+x_train, x_val, y_train, y_val = train_test_split(x, y, test_size=0.2, random_state=1, shuffle=True) (edited) "
+Does it mean that now everyone has to refetch the notebook?
+"EarlyStopping.stop_criterion instructions seem a bit contradictory: The docstring states that patience is ""Maximum number of epochs with unsuccessful updates"", implying that this many non-succesful rounds in row are allowed without outputting true, while the text above the cells says that we output True as soon as we have been unsuccessful ""for patience epochs"" in a row, implying that only patience-1 non-succesful rounds are allowed. I'm assuming that the latter is the case?"
+"Hey, I have a doubt about the early stopping in the third assignment! Since in the training phase we are calling the stop_criterion at each epoch, I’ve only considered the last element of the array and the minimum element (decreasing the patience by 1 if required). It works correctly during the training phase, I’m wondering why I’ve got 0 points there. @Dmitry Sergeev (TA)"
+"Hi, I fetched the new versions of the 3rd round and my 31_regularization still ends up in ""Error validating assignment."""
+"Hi, when is the deadline for this round?
+(And where does it say?)"
+"Hi. Just for clarification, we should just submit the 3_reg and it would submit also saved np arrays. right?"
+"Hypothetically, if our val_erros were [1, 0.95, 0.9, 1.5, 1.6, 1.5, 1.5, 0.8, 1] with tolerance = 0.5 and patience = 4, should stop_criterion return true because there are 4 unsuccessful updates after local minimum 0.9, or false, because there still aren’t 4 unsuccessful updates after global minimum 0.8?"
+I am unable to access the notebook after fetching new version. (edited) 
+"I am wondering about the same thing. Do we know that the test runs like [1], [1, 0.95], [1, 0.95, 0.9] etc, or might we get the entire list at once?
+
+Additionally, does a valid update reset the counter of unsuccessful updates back to 0, e.g. with patience 3 and tolerance 0.5 should [1, 10, 10, 10, 1.001, 10] return true or false?"
+I cannot fetch the updated assignment...
+I just noticed that the skip_training variable is actually never checked in 31_regularization... (edited) 
+"In 32_hyperparameter_search I get RuntimeError: Expected object of scalar type Long but got scalar type Int for argument #2 'target' when searching hyperparameters. I can make it work if I modify in a previous, non-editable cell y_train.astype('int') => y_train.astype('int64')"
+"In early stopping, do we reset the patience check each time we find a new minimum, or do we keep it as is. For example let's say we have tolerance of 0 patiance of 2 and errors of 0.5, 0.6, 0.4, 0.5, 0.3, should the execution stop after 0.4 or 0.3? (assuming we start with empty array) (edited) "
+"In the task setup of ""Regularization by reducing model capacity"" in ""31_regularization"" it says ""an MLP with one hidden layer with five units"". Although the task setup doesn't explicitly say it, but I expect it to mean also "" ... with tanh nonlinearity"" and ""linear output layer"". Did I understand the wording correctly?"
+"In “Regularization by reducing model capacity” the task says “one hidden layer with 5 units, tanh nonlinearity and a linear output layer”. Does this mean [1, 5] -> tanh -> [5, 5] -> tanh [5, 1] or [1, 5] -> tanh -> [5, 1] (eg, is the “hidden layer” tanh -> [5, 5] -> tanh or just tanh)? (edited) "
+"Minor issue, but may mislead some people. In EarlyStopping's docstring the type of the tolerance is written as int, while it's not true. (edited) "
+"My regularization notebook validation still gives 'Error validating assignment', my early stop seems to go for couple hundred epochs, is this too much for the validation?"
+"Should we expect a relatively large val_error in the error injection part? I got ~ 30%, and it’s kinda weird. (edited) "
+"So, the 3_mlp.pth also gets submitted when we submit the 3_reg from the assignments tab, right?"
+"The early stop criterion stops with the new fetched version always very early (just 1-6 periods). Should this function maybe return True just when there are patience-many periods and before that always False even if the tolerance got hit? This may help to get better results and as the documentation of the function is not clear, this interpretation might be possible."
+"When 32_hyperparameter_search says ""You are allowed to use only modules imported in the previos cell"", it means the cell with all the imports, right? Not literally the previous cell, which sets the device and doesn't import anything. (edited) "
+"Yup, decided to just submit it. There was some talk about it possibly taking too long and still being valid"
+"hi, I’m getting different results for each time I run the # Let's train the network with early stopping cell. Shoud this happen?"
+joined #ex3_regularization along with 19 others.
+"there seem to be problems with validation, if each cell runs correctly, it should be ok to submit"
+"yes, you are correct"

@@ -1,0 +1,178 @@
+0
+"(from the course announcement)  ""If you have questions about your grade, please come to the Q&A session this Friday at 16:15 in T1."""
+(the saved model is a binary file so it’s not UTF-8)
+:+1:
+"@Alexander Ilin thx! Maybe I’m confused because I haven’t seen this term in the tutorial. So, is this the hidden dimension? (just to confirm that I understood the tutorial correctly)"
+@Christabella Irwanto (TA) Difference between: 1) have linear layer and use relu function in forward or 2) have nn.ReLU as the layer (instead of the linear layer) and no other activation function in the forward. Both cases in MLP class
+@Christabella Irwanto (TA) What is the difference between that :arrow_up: and using torch.nn.ReLU as the layer?
+"After training the model locally and uploading the "".pth"" file to JupyterHub, I get the following message when I try to open it:"
+"Ah .. cool thanks, i was under the impression there was a separate ""Submit"" button for the model file, but this clears it up. Thanks!"
+"Ah okay, that makes sense. Thanks. It would be nice if the validator would confirm that the network is correct, I got decent accuracy even when I had the softmax (although the loss was big)."
+"Ah, it's just JupyterHub message, not an actual content of the file. I just though it was an error message from the torch that was just saved into the file itself."
+"Am I supposed to use softmax on the outputs? Or should the last line of MLP.forward be just x = self.fc3(x)? If I use softmax, I get much worse results (loss doesn't go below 0.4) (edited)"
+An alternative way to just access the .ipynb file would be a good shortcut here
+"And in the init function, you would only define the linear layers, and you would use the activation function only in 'forward', is that the correct approach?"
+"As to why it is defined like this: the linear transformation is an integral part of the layer, since it contains the learnable parameters, the weights. Without the linear transformation, containing only the activation functions, the layer would be of little use, since an equivalent model could be obtained by removing the layer altogether and adjusting the nonlinearity of the previous layer."
+"Based on the docs, I think it's just that relu is a function and ReLU is a functor."
+Currently unable to fetch the assignments in JupyterHub. Can it be done manually?
+"Eg, Relu(Relu(x)) = Relu(x)"
+"For clarity, nonlinearity means the activation function."
+Great! Thank you Christabella
+"Hello, I missing one point where should contact the course staff? Is here the right place?"
+"Hello.
+
+What is the difference between F.relu() and nn.ReLU()? The PyTorch documentation seems to use both, but I didn't figure out yet what is the difference in practical use. Thanks!"
+"Hi everyone, Just a basic question, to start this assignment, and to it in colab, which drive are we suppose to save the file in? Because it just says Download the assignment files to your computer. Keep the same folder structure as in /notebooks/deeplearn2019/"
+Hi! For some reason I am not able to see my results from the first assignment. It should be in deeplearning2019 folder? (edited)
+"Hi, I was checking the feedback for my first assignment and for some reason it seems that the data files have not been there and the tests have failed because of 'FileNotFoundError: File b'../data/winequality/winequality-red.csv does not exist'. Consequently, this results in more errors as the training data is missing. Everything worked without any errors when I was running it before the submission. Should I have submitted the data files separetely or something?"
+I am not sure what you are trying to do.
+I couldn't find details on this sort of errors on Google.
+"I defined my net like this:
+mlp_seq = nn.Sequential(
+    nn.Linear(n_inputs, 100),
+    nn.ReLU(),
+    nn.ReLU(),
+    nn.Linear(100, 2)
+)
+While the answer is:
+my_mlp = nn.Sequential(
+        nn.Linear(n_inputs, 100),
+        nn.ReLU(),
+        nn.Linear(100, 100),
+        nn.ReLU(),
+        nn.Linear(100, 2)
+    )
+How should I know that I should put this nn.Linear(100, 100)? (edited)"
+I didn't get any feedback?
+I do not know what is going on.
+"I do not want to give direct answers here but if you carefully read the docs of pytorch, you should figure out what is the right way. (edited)"
+"I don't know if anybody else noticed, but it seems that the exercises expect you to define the layers in __init__(). I happened to do this in forward() in FancyMLP(). Doing it this way does not show the layers in final print call.
+
+I'm not sure if this is counted as a mistake, since the function seems to accomplish what it's meant to do, but there might be autograding test that expect otherwise."
+"I guess the concern was to modify code that was not part of # YOUR CODE HERE. nbgrader copies all the code from that cell from your submission. So, changing the learning rate is safe, there will be no problems. Doing larger modifications of the code that you are not supposed to touch can cause problems."
+"I guess you did not press ""Submit"" button, did you?"
+"I mean, I have just done the exercise in JupyterHub, but executing the cell saves a file with just this:"
+"I think I really misunderstood the “units” thing of the layer. I lost half of the points from the assignment because from one hidden layer to another (in the “multilayer perceptron (MLP) network” part), where the relu is applied, I didnt use a linear activation (nn.Linear(100, 100) according to the feedback tests). How should I know that I should use such linear function? If the relu keeps the dimensionality, shouldnt it also keep the units?"
+"I think it’s more logical to define the activation_function in the constructor (like when you  want to  create a new object). Then, we can define a variable like self.activation = activation_fn. Better than write it in hardcode way I think :smile:"
+"I think that’s expected if you try to open the saved model file from jupyter (there’s no reason to open it manually, we are only saving it so that we can load the model from the notebook when skip_training=True) (edited)"
+"I understand the mlp.parameters are the gradients.
+When task is to zero the gradients I was thinking to zero mlp instance.
+However, in many examples the actually the optimiser zeroed.
+On the other hand optimizer = torch.optim.Adam(mlp.parameters(), lr=0.01)
+So the result should be the same (and practically it is), but the mlp was a lot faster to run.
+So, what is the better way torch-wise of doing this?"
+"Im getting this message when trying to validate my notebook, was there a way to re-fetch the assignment?"
+In one of the linked tutorials https://pytorch.org/tutorials/beginner/pytorch_with_examples.html a network with one hidden layer with ReLU activation function is created with nn.sequential by having a linear layer defining the input and hidden layer size and then nn.ReLU() with no arguments. When building the model using a self created constructor method does the input layer also need to be specifically defined or is input layer thought of as just the vector and the input weights to the hidden layer?
+In option 2) it sounds like you're removing the linear layer entirely? You definitely need to use nn.Linear (or directly perform the matrix multiplication of wX in the forward).
+"In the first exercise, does a ""ReLU layer"" of size N mean a torch.nn.Linear layer of size N followed by a call to the ReLu activation function?"
+"Is it okay to ask for manual grading at the end of course for this exercise if it has impact on my final grade? That is, if I get e.g. grade 3 and the points from this exercise would help me get grade 4?
+
+edit: I didn't see the mail. I submitted my username into #forgot_to_submit (edited)"
+Is this an issue or is just that JupyterHUb can't read the type properly? (edited)
+It depends on which Drive folder you’re putting the notebook in; it shouldn’t matter as long as the course data folder’s relative location is preserved (or you can specify course_data_dir in the third cell)
+"It may be a silly question, but what does ""100 units"" mean when defining the hidden layers, in the first net of the assignment?"
+"It's recommended to attend the Q&A session this Friday at 16:15 in T1. if you cant , then ping me directly"
+"Just to clarify, in :arrow_up: you're referring to applying relu in the forward function right? And the second method is using nn.ReLU in the nn.Sequential module?"
+"Just to make sure that I have understood everything correctly:
+
+I can not be sure that my submission is correctly done, or how many points I will be awarded. ""validate"" with skip_training=true only runs all the cells, even if it says that ""notebook passed all the tests"". These are not the tests of the autograder, and for example the correctness of FancyMLP I have to test myself. Is this correct?
+
+In addition, I'm feeling a bit confused with the non-editable commented second cell, which says that ""in evaluation, this cell sets skip_training=true"", even if it is commented. What is meant by evaluation here? Running the cell, validating the notebook or the work done by autograder / course personnel?"
+Maybe I'll just stay with CPU for now..
+"Maybe it's a silly question, but how can I properly transform x_train_scaled and y_train, because when I use torch.from_numpy() function, I get this error?"
+Note: No activation function should be applied to the last (output) layer
+"OK, thanks. Is the model file evaluated? Since submitting the notebook does not upload the '''1_mlp.pth'''-file, I take it that you would need to run each submitted notebook in order to get the model file for evaluation."
+"Oh, that was not mentioned anywhere at all."
+"Ok, now I got what you were trying to do."
+"One quick workaround is to rename your 1_mlp folder, and then you can fetch it again"
+Right
+"Similarly, in the FancyMLP exercise, should each of the layer types be torch.nn.Linear followed by specified activation function or what should the layer type in each of the layers be?"
+"Since a hidden layer is for MLPs defined as a linear transformation followed by an activation function.
+
+Edit: So for clarity, with this definition the linear transformation is not ""between"" the layers, but a part of a layer. I said ""between"" previously because in visual represenations of the network it looks like it. (edited)"
+"So it shouldn't be applied at the output of the network, since cross_entropy calculates the softmax internally if I understand correctly. But shouldn't softmaxing the output be done by the network and not the loss function, so that it also gets applied when the training is done and the network is used for classification?"
+So this means that validate 1_mlp -> pass all tests and submit is enough?
+"So, in the FancyMLP class, the init method has the activation_fn as an argument whereas the forward method doesn't. Isn't the activation_fn supposed to be used in the forward method? In the init method, we just define the layers right? I had to hardcode the activation_fn when I wanted to use it in the forward method. Is that okay?"
+Submitting the .pth file: That is not visible in Assingments when submitting when it is in that folder. It should not? You will find it from there?
+"Thanks a lot, saved me :slightly_smiling_face:"
+Thanks! That solved it. I didn't know that was possible.
+"Thanks, got it"
+"Thanks, works now with the help of the .float() for x_train and .long() for y_train."
+"That must be it. The root problem is that if you recently have used other Jupyterhub modes (regular notebooks, not the deeplearn2019 course) then the menu that offers those other sign-in options no longer appears, even if you log out, at least for a while. So I'm not seeing it atm. We saw this problem before, and then after some time, the menu became available again (caching issue maybe)"
+"That probably means that you did not click ""Submit"" button."
+"That would work, yes"
+That's fine
+The model is evaluated. Submitting the notebook does upload the *.pth file
+"The nn.ReLU module is a wrapper of F.relu! The functional interface is handy as it's more flexible, e.g. when you want to define custom layers.
+
+Some discussions:
+https://discuss.pytorch.org/t/whats-the-difference-between-nn-relu-vs-f-relu/27599
+https://discuss.pytorch.org/t/how-to-choose-between-torch-nn-functional-and-torch-nn-module/2800/7"
+"The plots are for your information. They are not evaluated. With skip_training=True, the accuracy plot is empty. And yes, there is that problem with the second confusion matrix. It is also not evaluated."
+The short answer to why you are supposed to use nn.Linear() between ReLU:s is that MLPs always have a linear transformation between the layers.
+"The task was defined like this:
+# This function should return an MLP model created with torch.nn.Sequential
+# - input dimensionality 11
+# - one hidden layer with 100 units with ReLU nonlinearity
+# - one hidden layer with 100 units with ReLU nonlinearity
+# - linear output layer with output dimensionality 2.
+
+The input dimensionality and the first hidden layer becomes ""nn.Linear(N_inputs,100) followed by a ReLU. The second hidden layer of the task becomes nn.Linear(100,100) followed by a ReLu; and finally the output layer bevomes nn.Linear(100,2), where the 100 comes from the output of the previuos layer. (edited)"
+"There would have to be a linear transfomation between the layers, otherwise it wouldn’t be a layer that “learnt” anthing"
+"Unable to re-gain access to the screen. Previously it came back some time after logout, but no more. I'll contact IT support."
+Very true. Just wanted to post this since it might go unnoticed since it does not throw an error.
+We were supposed to change the lr in the Adam optimizer right? There is no # YOUR CODE HERE…
+"Well @Christabella Irwanto (TA), in option 2 I would have replaced 2 middle linear layers with ReLU layers (and still have 2 linears, first and last layer). Would it be wrong?"
+"Well, type of the input was numpy.float64 before transformation, and after transformation it is torch.float64"
+What is the proper way to come and discuss the about feedback?
+"When saving the torch file in JupyterHub, you get a file with Error! /notebooks/deeplearn2019/1_mlp/1_mlp.pth is not UTF-8 encoded"
+"Why linear output layer with output is asked to be dimensionality of 2? Shouldn't the output should be just a binary number, so shouldnt the last dimension be 1? (edited)"
+"Yea, that seems to be case.. I assumed the validate is the same thing as submit.. However, I have the timestamp from the 1_mlp.pth file which shows that I’ve done the exercise before the deadline if that matters. Or do I now get 0/6 from this exercise?"
+Yeah me neither. I think the default base code needs some sort of modifications in order to be run with GPU (edited)
+"Yes, I had modified the directory and forgot to remove the line so it didn’t work as the test data was in a different directory. Would it still be possible to get points from this if everything else is correct?"
+"ah, yes, but that’s why I said I think I misunderstood what the question means by “units”, or even how to interpret such questions. Because, reading the question, the task required, how should I know that I should apply nn.Linear from hidden layer 1 to hidden layer 2, instead of hidden layer 2 receiving directly the result from hidden layer 1? Because if the ReLU keeps the dimension and, also, following what it’s written in the question, why can’t I just use the direct result from hidden layer 1? Reading the question, what tells me I should do hidden_layer_2_activation(linear(hidden_layer_1_result)) instead of hidden_layer_2_activation(hidden_layer_1_result)? Did you get my question? Sorry if I’m being confusing"
+because of the type of the loss function used.
+cannot reproduce this. did you login to the deeplearn2019 environment?
+"correct.
+
+the second non-editable cell: by evaluation I mean the work done by autograder. So, even if you forget to set skip_training to True, it will be done in that cell."
+deeplearn2019/feedback
+"each hidden layer needs to be a linear transformation followed by a ReLU, not just ReLU on its own. you can try running your different versions and seeing if the outcomes are as expected! (edited)"
+great!! Thank you very much
+"hmm, now I understand. Thank you!! :slightly_smiling_face: (edited)"
+https://deep-learning-aalto.slack.com/archives/CFY63U23Y/p1551635869027500?thread_ts=1551633664.021900
+i experienced this one before and realized just because I spawned a wrong course.
+"i was able to run it on gpu, but I don't know what is going wrong"
+"in pytorch the type torch.float is actually float32 , doing your_tensor.float() will convert torch.float64 to torch.float32"
+"it is, through loading in the notebook as model. What else?"
+mlp.parameters() is the iterator to extract all the parameters of the networks. doing for param in mlp.parameters(): print(param.grad) to get each block of parameters's grad. The recommended way to zero out the old gradients before accumulating new one is to call optimizer.zero_grad() before loss.backward()
+"mlp.zero_grad() clears the grads as well, so I was wondering if there is any difference which one to use. First it looked like mlp. is faster than optimizer but after few tests it turned out they are about the same."
+"nn.Linear is just a layer of weights, not an activation. Not sure what’s meant by “units” ?"
+read the docs https://pytorch.org/docs/stable/nn.html#torch.nn.functional.cross_entropy carefully
+since the hub itself is just a convenience
+so 1_mlp.pth is not evaluated?
+"so the MLPs always have a linear transformation between the layers. is kind of a rule for MLP!? Sorry, it’s just I didn’t see this in any tutorial and I don’t recall this being said in the class"
+"so, even that the question doesnt say explicitly, am I supposed to transform the input dimension from 11 to 100 before applying the relu?"
+"softmax preserves the order of the inputs, so doing argmax on the inputs or outputs of softmax gives the same result"
+some assignments contain multiple files and not just .ipynb
+soodn1
+"sorry, but I’m confused about this dimensions"
+the former. no need to explicitly define the input layer.
+the number of outputs in a layer.
+"through Jupyter hub, copy the files there and run your notebook with skip_training=True to make sure that everything works"
+what is your username?
+"yep exactly, they should be nn.Linear + specified activation function (edited)"
+yes
+yes :thumbsup:
+"yes, but your notebook can read it even though, it's fine. The text there is not the real content of the file"
+"you can take a look here
+https://pytorch.org/docs/master/tensor_attributes.html#torch.torch.dtype"
+"you can try different lr , and choose the best one
+https://deep-learning-aalto.slack.com/archives/CGE930BEE/p1551443494010600"
+you can try to go to control panel and restart your server
+you must have modified the path to the course directory.
+you should convert the input to float (using .float() )
+"• Using the same number of neurons in both layers was probably a bad idea, as it may have created confusion.
+•  Maybe it would have been better to add a picture of the neural network structure.
+• There was an example of a neural network in the class where linear transformations were used in every layer.
+• using relu(relu(x)) just does not make much sense."

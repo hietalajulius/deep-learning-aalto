@@ -1,0 +1,505 @@
+0
+(it works about as well as manually ignoring padding) (edited)
+0.45
+"5.2 loss computation: cannot figure out the test assertion: assert loss.shape == torch.Size([]), ""Bad shape of loss: {}"".format(loss.shape). My loss shape is torch.Size([1]). What does the test statement mean?"
+:+1:exactly
+:grinning: that would make sense
+:sweat_smile:
+"@Alexander Ilin I guess we could fix this by
+
+if output_length>target_length:
+    decoder_outputs = decoder_outputs[:target_length,:,:]
+    output_length = target_length
+
+but not quite sure (edited)"
+@Cagatay Yildiz (TA) so we don't need to do something regarding padding?
+"@Davi after you apply embedding on input_seq, reshape the embedded output according to the doc here on torch.nn.GRU. Look at the input parameters description.
+https://pytorch.org/docs/stable/nn.html
+and after that its simple linear layer followed by LogSoftmax prob."
+"@Hai To (TA) I'm still having the same issue, the error just doesnt go any lower than 1.5"
+"@Hai To (TA) does something like this seem correct then?
+
+output = F.log_softmax(self.out(output), dim=2)"
+"@Joakim Thanks for your clarification, could you please explain why did the notebooks in my folder got reseted?"
+"@Muaali for some reason after I embed the sequences I get 4 dimensional output like:
+[max_seq_len, BS, hidden_size, 3]"
+"@Vili I suspect so -> also, doing so makes the implementation slightly simpler (edited)"
+@sspilsbury see the above thread
+"Actually, not validation, maybe testing"
+"Also: it seems like a bit of code below the ""insert your code here"" assumes that I save y_i to be in variable ""output"""
+"Any good links/article for understanding the 5.2 assignment?
+Got stuck at the encoder step.. Not sure how and when to use padded/packed sequencies. (edited)"
+Are these training or validation examples?
+Are you still have the problem?
+At least it has worked for me :smile:
+Between which steps in the decoder we should transform it to the padded sequence?
+"But I have a feeling you don't have the solution, either"
+Can it be much lower? (Noting that in the batching instance we train for 20 epochs instead of 8)
+"Can you say your usernames, we'll check it. (edited)"
+"Could anyone can help with this issue ? In 5.1 in Training a sequence-to-sequence model, there is a bug in the code when not teaching force and output_length>target_length in the original code. It cause the runtime error: (edited)"
+Could you give us more information about that?
+Decoder.forward() takes hidden as input. hidden is the same thing as z_0 or h_last from the encoder. (edited)
+"Difficult to say, I have not seen such good numbers."
+Do we actually have to use this hardcoded criterion in the loss? We can implement it ourselves in much easier and faster way without this assumption.
+Do you mean you're initializing encoder hidden at the start of each iteration of the loop?
+Does this seem correct?
+"Doesn't [2,1] mean 2 words? If your batch_size is 2, then you process one word per batch. Doesn't this make sense?"
+FWIW I tried training with this and got worse results. So YMMV
+"For 5.2...computeloss section can we use ignore_index argument to compensate for the padding?
+Edit: Also i was wondering if  it is allowed to change reduction='none' to 'mean' (edited)"
+"For 51, i'm not sure how the decoder should generate the information if target sequence is None.
+If we have the target sequence, we should feed the target sequence to the embedding. If we don't have the target sequence, or teacher forcing is False, then we should use the decoder's predictions. How do you produce these predictions without some input? (edited)"
+"For anyone else wondering, yes you do need to reshape."
+"For me the lossfunction continuously returns 0, so that the network does not get any gradient back-propagated. Has someone the same problem?
+[1,   100] loss: 0.0000
+[1,   200] loss: 0.0000
+[1,   300] loss: 0.0000
+[1,   400] loss: 0.0000
+[1,   500] loss: 0.0000
+[1,   600] loss: 0.0000
+..."
+"For me the simple if else solved this edge case :smile: , I just reshaped if the t > 0. Test seems to pass"
+"For me, embedded inputs (that were feeded to pack_padded_sequence) have 3d shape: [max_seq_len, BS, hidden_size]"
+"For me, it is even slower in the second implementation. can somebody explain that?"
+"For some reason my training does not achieve the 0.5-0.6 gap, it just gets stuck around 1.3-1.6 after epoch 6"
+"For the batch encoder: should we do the embed, pack input sequence, GRU, convert back for each batch or do I understand something wrong? I always get errors like Expected len(lengths) to be equal to batch_size, but got 2 (batch_size=1) (edited)"
+For the softmax?
+For validation
+"Got it solved, it was related to the dimensions of the tensor.  Related to https://deep-learning-aalto.slack.com/archives/CFWL107MH/p1554037548087200"
+"Got it, thanks a lot! @Muaali (edited)"
+"Great, thanks!!"
+"Has anyone else been able to get the batch loss function to work? I've tried debugging by setting the batch size to 1, the learning rate to what it was in 5.1 and computing the loss directly on the output seq probs vs the target seq. (Eg, not implementing what was suggested in terms of ignoring padding, though that should not matter in cases where the batch size is 1 and padding is effectively not used). I also verified that the target and input seqs are sane. All that happens is that the loss goes up. (edited)"
+Have you applied argmax() on decoder_output? I think it would cast the output to int (or Long).
+"Here is a simple explanation on teacher forcing: https://machinelearningmastery.com/teacher-forcing-for-recurrent-neural-networks/
+simply put, you overwrite the predicted output of the trainer with the true label to make sure that the model learns the true values while processing with subsequent sequences. If we don't do it, errors keep on aggregating. (edited)"
+"Hi, I have a question about the score of assignment 5. I resubmitted my assignment after the deadline few hours and I've got 10 out of 15 for my assignment but the late submission penalty is 10 , which means I dont receive any score for 5th assignment. Is there any policy for late submission?"
+"Hi, I have and I get stuck around 1.5 error"
+"Hi, In 5.1 does the loss steadily decrease? Cause my loss is all over the place. [1,   100] loss: 1.1417
+[1,   200] loss: 1.1735
+[1,   300] loss: 1.1330
+[1,   400] loss: 1.1334
+[1,   500] loss: 1.1290
+[1,   600] loss: 1.1302
+[1,   700] loss: 1.0834
+[1,   800] loss: 1.1267
+[1,   900] loss: 1.1356
+[1,  1000] loss: 1.1588
+Do i have to run it for  enough epochs to converge?
+Edit: I am getting - cuDNN error: CUDNN_STATUS_INTERNAL_ERROR - after few iterations. (edited)"
+"Hi, thanks for pointing out this pin thing, I didn't even know about that. Also, sorry for the hassle if you saw my previous reply late."
+"However, I noticed that if I change batch_size to 1, switch from Adam to SGD and do the early-sequence-stopping trick (eg, when EOS_token is emitted, stop generating new sequence items) then I get sensible performance and translation results"
+I agree that the description is somewhat confusing.
+"I also had issues with that, now it looks good.
+ tensor([[[0.1014, 0.0968, 0.0879, 0.0835, 0.0902, 0.1166, 0.1005, 0.0885,
+          0.0973, 0.1373]]], grad_fn=<SoftmaxBackward>) 
+(edited)"
+I also had this problem. Username is jliski.
+"I am kind of lost following your argument, but let me put it this way: You do max_length iterations and process one work per sentence in each iteration. Also, in my implementation, the first input to GRU is always of shape torch.Size([1, 2, 2]) (not for actual training but when I run the cell after Decoder class)"
+"I am not a torch expert but as I know, the left hand side variables (here s) shouldn't be modified as you did here. Rather than a for loop, you should have a single statement like s=number of nonzeros. Or, you could compute the loss for the entire sequence (including padding_values), and mask out the likelihood values that correspond to padding_values."
+"I am wondering why do we have pin_memory=True in torch.utils.data.DataLoader(.) in 5.2 rnn_batch_training. Apparently, when pinning, only cpu memory can be used. If I use gpu, I get this error: RuntimeError: cannot pin 'torch.cuda.LongTensor' only CPU memory can be pinned.
+The program runs fine with cpu though."
+I can't see anything wrong.
+I do agree that your solution is simpler though.
+I do not know a better way. (edited)
+I do not know what the problem is. I have tried training all models on GPU and it worked for me.
+"I do not recommend to change the code that you are not supposed to change. In this particular case, grading should not be affected (I quickly tested it) but in general it is not safe."
+"I do not understand what is the issue here. And what do you mean by ""manually""?"
+I don't think we need to use the pack_padded_sequence or the pad_packed_sequence in the part we need to implement in the decoder. At least I didn't (edited)
+"I find these dimensions way more intuitive than [3,2,1]. What's wrong with this?"
+"I get it, thanks"
+"I got the same error too, my username is hallav1"
+I got the same error.
+I guess I know what is teaching force
+I guess it can be much lower. I do not have a notebook with the prints of the loss during training for that exercise.
+I guess the solution has the same order as given right above the Encoder code cell.
+I had the same issue while working on Colab. Had to restart from scratch.
+"I had the same problem. self.embedding(pad_seqs) has dimensions  torch.Size([4, 2, 1, 3]), you need to turn it to torch.Size([4, 2, 3]) and then it works. Or at least doesn't give any errors. (edited)"
+"I have a ""n+=1"" in a similar for loop and it works as expected. Why do you take the clones instead of using the original variables?"
+"I have a problem with 51_rnn decoder. When embedding the first word (SOS_token), the embedding returns torch with torch.Size([1, 20]). However, later the GRU needs an input of 3 dimensions.
+
+I defined the embedding function similarly as in the encoder part, and this embedding on encoder returned a torch with torch.Size([4, 1, 20]). Should there be a some kind of exception for handling SOS_token? Or is the problem on my embedding function?"
+"I have a question about the return type of compute_loss() in 5.2.  I got the following error during the training  "" 'numpy.float64' object has no attribute 'backward' "". Am I missing something here?"
+"I have not tried ignore_index, I do not know."
+"I have updated the tests, we will update the feedback soon."
+I just checked jupyterhub and figured out that the notebooks I did validate and submit yesterday are gone and I got both the notebooks empty? I wonder what’s happened and whether it affects my submission?
+I made the same assumption in my implementation :sweat_smile:
+"I mean I saved the training model, then load it and generate these paris"
+"I mean it makes no sense for us to process multiple words per one sentence at once right? But then how do I interpret that sometimes my prev_word is of shape [2,1]?"
+I mean iterating to get the word with highest probability
+"I mean that the first dimension is 1 in one iteration of the for loop? If we do max_length iterations in the for-loop, does that not mean that we process only one word PER each individual sentence inside the loop? (edited)"
+"I realised something about compute_loss in 5.2 -> was it reasonable assume that the padding only comes at the end of every sequence? This seems like the most reasonable thing, since putting padding at the beginning of the sequence doesn’t make sense, but I realised now that the auto-grader could test for ignoring padding at the start of the sequence or even mid-sequence (unlike the example sentences and what we actually trained the network on)."
+"I reproduced your result, it depends on the dim. try to find the correct value"
+"I still do not understand, why target_seq=input_seq not target_seq=target_seq, when teacher_forcing is triggered."
+I think it should be target_seq=target_seq if teacher_forcing=True
+"I think that output arrays should include the log-softmaxes of the dictionary vectors, that is, y_i in the graph. However, this is mapped from z_i, and since h_0 = first hidden state, I guess y_i should be mapped from the hidden output of the GRU? I think it would make sense to map it from the not-hidden output of GRU, but the specifications seem to say otherwise, in which case a lot of power of GRU goes unused."
+"I think the function requires a python number (torch.Size([])) as a return value, not a tensor. So you can just get the value from the torch.Size[1] tensor by using .item()for example. https://pytorch.org/docs/stable/tensors.html#torch.Tensor.item"
+"I think the kernels on Jupyterhub servers are terminated after two hours (or so) of inactivity. Since there is a prompt you need to respond to, I don't think you can leave it overnight. (Or , change the notebook so that there is no prompt). In any case, training on Jupyterhub usually takes about half an hour, so maybe worth the wait. (edited)"
+I think the problem is with the forward in the encoder or the decoder
+I think the same with you.
+"I think this is the solution I used before, but I still was left with an error of 1.5ish"
+I think this should not be a problem.
+"I think your point about requirement is true, but producing integer output from float input is casting!"
+I tried avoiding that ! there's my code.
+"I tried this and it seems to work about as well as the hand-written version (its also faster, presumably because CuDNN does something with that information), though have kept the hand-written version."
+"I understand taking away the padding from the pad_target_seqs, but how should the decoder_outputs be modified?"
+"I was thinking about another thing. NLLLoss consider target values between [0, C-1] (C is #classes) while our target values are in the range [1, C]. It would make problem for 1 of the words I think. However, doesn't change the results that much (like 0.01%). Or maybe I'm wrong :smile:"
+I was using the softmax function instead of log_softmax. :sweat_smile:
+I was using the test_encoder/decoder causing all the problems. Sorry for trouble guys.. Mistake on my part.
+"I would say no. What's your loss value, about 0.5?"
+"I would, in general, recommend checking the input/output dimensionalities of the 'external' modules, such as GRU and Embedding."
+"I'm a bit confused about the training loop inputs in 5.1. The encoder takes ""encoder_hidden"" and ""input_seq"", and outputs a new hidden which goes to the decoder. After that it is decided whether to use forced teaching. But there's something I'm missing, I get assertion errors of mismatching dimensions. I use the initialized encoder_hidden at the start of each loop, should I use the previous one? (edited)"
+I'm actually wondering the same. Not really sure if I'm just mistaken in some other part though.
+I'm getting this error during training in 52 : 'RuntimeError: one of the variables needed for gradient computation has been modified by an inplace operation' ?? anyone knows where it comes from ?
+"I'm getting this type of loss at the very start, is this normal?
+[1,   100] loss: 3.6184
+[1,   200] loss: 3.1852
+[1,   300] loss: 2.7657
+[1,   400] loss: 2.7139
+[1,   500] loss: 2.6106
+[1,   600] loss: 2.4415
+[1,   700] loss: 2.4713
+[1,   800] loss: 2.3040
+[1,   900] loss: 2.4342"
+"I'm getting this type of training output im 5.2. Can someone verify if this is correct?
+[1, 136] loss: 1.5889
+[2, 136] loss: 1.1650
+[3, 136] loss: 0.8584
+[4, 136] loss: 0.6310
+[5, 136] loss: 0.4792
+[6, 136] loss: 0.3481
+[7, 136] loss: 0.2857
+[8, 136] loss: 0.2393
+[9, 136] loss: 0.1870
+[10, 136] loss: 0.1722
+[11, 136] loss: 0.1485
+[12, 136] loss: 0.1345
+[13, 136] loss: 0.1208
+[14, 136] loss: 0.1199
+[15, 136] loss: 0.1105
+[16, 136] loss: 0.1071
+[17, 136] loss: 0.1109
+[18, 136] loss: 0.1029
+[19, 136] loss: 0.1197
+[20, 136] loss: 0.1137
+Finished Training"
+"I'm stuck in 5.1 with a training error that doesn't go below ~2.5. I have a feeling it's a simple mistake somewhere, but I can't spot it. Anyone else run into a similar situation and found the solution?"
+If I remember correctly that function required a certain order of sequences in the previous version of pytorch. Now it seems that one can simply use pad_sequence. But I have not tried it.
+"Im getting similair loss as Sayed which decreases to 0.5 over time, so I guess @Jiyo Palatti you are doing something wrong. (edited)"
+Im having issues with the same thing.
+"In 5.1 encoder, in the return value description is  Returns:
+         output (tensor): Output of the GRU (shape [seq_length, 1, hidden_size]).
+         hidden (tensor): New state of the GRU (shape [1, batch_size, hidden_size] with batch_size=1)."
+"In 5.1, I'm having issues with the decoder producing outputs that are larger than the target_seq when training without teacher forcing. It apparently should find the EOS_token before len(target_seq) iterations, but my solution does not and iterates until MAX_LENGTH and thus throws an error while extracting the right portion of the target_seq to calculate the loss: shape '[10]' is invalid for input of size 5. Has someone else encountered this error, I'm not quite understanding what I'm doing wrong"
+"In 5.1, decoder, I got [0., 0., 0., 0., 0., 0., 0., 0., 0., 0. ]for the first output by the input of [SOS_token], which I got
+IndexError: list assignment index out of range but before passing the output value to nn.LogSoftmax(dim=1), the output still has 20 items.  Anybody can help please?"
+"In 5.1, does a teacher_forcing_ratio of 0.5 entail that teacher forcing should be ON for half of the sequences that the model decodes, and it should be OFF for the other half?"
+"In 5.1, what's the logic behind choosing the dim= parameter for the LogSoftmax function?"
+"In 5.1. Decoder, I don't understand the specification. GRU cell outputs two values (output, hidden = self.gru(...)), but we only seem to use hidden (""the state of the cell, z_i). This is because the specification says that h_0 = hidden, the state is mapped to y_i through linear layer + log_softmax, and this same value is used as input to the next cell... so the next cell gets two variants of hidden z_i, both direct input and the previous word (which is mapped from the same input)...? Do we discard output, then? (edited)"
+"In 5.1. evaluate part, I am getting correct translations but Im also getting ""Key error"". Anyone can help what is causing the key error?"
+"In 5.1., if the training loss is eventually ~0.3, which is not between 0.5-0.6, a too good result? Just being a bit suspicious..."
+"In 5.2 Encoder part, should I reshape the pad_seqs Tensor before passing it to self.embedding? In the test it comes as [4,2,1] and when I pass it to self.embedding it comes out as [4,2,1,3]. But in reality I want it was [4,2,3]? (edited)"
+"In 51_rnn evaluation part, the predictions are mostly correct but there are errors like this:
+vous avez tous deux faux . EOS
+= you are both in the wrong . EOS
+< you re both right . EOS
+
+Are these okay/normal? In the training i got to 0.5-0.6 area with the loss (edited)"
+"In 52 Decoder, do I assume that the first dimension is always 1? So that it only takes one word per sequence, and then batch size is whatever? If YES, then why does the test cell give a sequence with size [2,1]? Since that would correspond to 2 words from one sequence and batch_size = 1 right? My code transforms it from [2,1,2] (after embedding) to [1,2,2] and the test passes, but I am confused why it works like this."
+"In Decoder.forward, we are told z_0 = h_5, but it is not given as input to anywhere in decoder as far as I understand, how are we supposed to access it?"
+In one submission the problem is that evaluate function returns a tensor of type double. And the  word indices are supposed to be of type long. I will modify the test to convert the output of evaluate to long. (edited)
+"In our case output = hidden. This is because we use only one layer of GRU. As you can see in the lecture slides, GRU does not have a hidden state, it outputs its state. PyTorch supports stacking multiple layers of GRUs on top of each other inside one GRU object. In that case output is the output of the topmost GRU unit and hidden should contain the states of all the GRU units in all the layers. We use only one layer of GRUs and therefore output = hidden. (edited)"
+In the compute_loss in 5.2. Should we preprocess the decoder_outputs and pad_target_seqs (take away the padding) so that when calling NLLLoss that the padded values dont affect the loss value?
+"In what form are the inputs of criterion() expected in 5.2? The documentation for NLLLOSS was not that clear. I tried ""criterion(decoder_outputs[:, seq_idx, :]], pad_target_seqs[:, seq_idx, :])"", but a dimension error still occurs. (edited)"
+"Is there a metric that we can use to know whether we’ve achieved adequate performance on the batched model? For instance, some sort of expected loss value or accuracy?"
+"It could be that, for example, you compute the mean of something while you are supposed to compute the sum. That something is related to the loss calculation. I would suggest you check the sums, means, divisions, etc."
+It doesn't matter.
+"It goes up in both cases. However, if I switch from Adam to SGD, it optimises correctly"
+"It says in the specification that the output shape is [max_seq_length, batch_size, 1] so now we would have max_seq_length = 3, batch_size = 2?"
+Its a hyperparameter.  You can represent the same words with different embedding_dim.
+Its a simple coin toss.
+"I’m a little bit confused in the evaluate function for the 5.1 part. The decoder output has shape output_seq_length, batch_size, output_dictionary_size, while the evaluate function should have output_seq_length, 1. Does this mean that I should manually look for the word with highest probability?"
+"I’m having problems with the shapes in the Decoder of part 5.2: in the 1st iteration, my prev_word has shape [1, batch_size] and my final output (after F.log_softmax) has shape [1, batch_size, output_dictionary_size]; however, in the 2nd iteration my prev_word has only one dimension, with length bach_size. Anyone has any ideia what could be the problem?"
+"I’m iterating over the output_seq_length to get the word with highest probability in the output_dictionary_size dimension, to then return the output. But this seems quite inefficient for me"
+Let it run for longer and see if it decreases (it does not necessarily decrease from print to print).
+"Let's say target sequence is None. Now, observe that the decoder GRU cells take two inputs: previous data point and previous hidden value. When you start running the decoder, these inputs are SOS_token and encoder_hidden (encoder's output). You run the GRU cell just one step, and generate new_hidden and output. Then, at next time step, you feed the GRU cell with new_hidden and output and proceed like that until termination."
+"Looked interesting - though I think what padding_idx does is ignore preceding padding elements in the batch (eg, the output batch length will be batch_size - n_head_padding, then output zero-vectors for any tail-padding): https://discuss.pytorch.org/t/padding-zeros-in-nn-embedding-while-using-pre-train-word-vectors/8443/4 . This could be the reason why you get index out of range"
+Looks ok to me.
+"Mhh,  but the instruction says we should accept such sequences... So I'm unsure @Alexander Ilin. Maybe you could state it in the instructions?"
+"MiikaK, got the error down to the 0.5...0.6 range. Sorry to say, though, that I don't have a clue what's different. I tried a bunch of things that did not work so I thought I changed everything back to where I was. But this time, the error is in the expected range. (edited)"
+Most likely a mistake in my decoder since I think the EOS break condition should be met.
+"Must be something else then, all other values for dim give me losses of -1, and the output of the softmax is all ones then."
+"My evaluation outputs for 5.1 are as follows:
+je ne me rends nulle part . EOS
+= i m not going anywhere . EOS
+< i m not going anywhere .
+
+ils ont tous disparu . EOS
+= they re all gone . EOS
+< they re all gone .
+
+je vais bien . EOS
+= i m ok . EOS
+< i m fine .
+
+c est une vraie loque . EOS
+= he s a total wreck . EOS
+< he s a total wreck .
+
+je me rejouis de le voir . EOS
+= i m looking forward to seeing him . EOS
+< i m looking forward to seeing him .
+
+Does there need to be an 'EOS' at the end of the sentences that the model translates (i.e. on the third line)?"
+"No, I do not have good understanding of that parameter."
+"Nope, not yet at least"
+Not sure If this is the correct way though…
+"Ok, it seems that output = hidden.... now I'm truly confused, back to the lecture slides it is"
+"Okay this seems to work, thanks a lot :slightly_smiling_face:"
+"Okay, seems like Adam vs SGD was a red herring. Actually, Adam gives far better results now that my loss function is correct."
+"Okay, thanks! Forgot to go through all input sequences in encoding part, but now the dimensions seems to match in both parts."
+"One way around I found was by creating a cell right after the training cell and put the code to save the files without prompting. That way, you can leave the execution queued including this new cell :slightly_smiling_face:. (edited)"
+Or start (2) + length (2) exceeds dimension size (2).
+Please ask @Hai To (TA) to use your latest submission before the deadline. I do not know how to configure nbgrader to handle this automatically.
+Please try to read the documentation of NLLLoss carefully. I agree it is somewhat difficult but it has the right information.
+"Read the documentation of GRU
+https://pytorch.org/docs/stable/nn.html#gru"
+Seems like it was written to deal with exactly this situation
+Should the 5.2 collate implementation just use pad_sequence? The assignment notes are little bit confusing. (edited)
+Should the outputs which is returned contain the output before log_softmax and linear layer or after?
+"Shouldn't the shape of the pad_output_seqs be [2,3,1] not [3,2,1]? (rnn 52 collate function). As we have to 2 sequences, and in each sequence there needs to be 3 words in total after padding."
+"So I am still confused about TA's words, why target_seq = input_seq not target_seq = target_seq"
+So it is the same code
+"So, I let the model train overnight and when I try to save the model by running the next block, it says ""skip_training"" is not defined and the number [1] shows up beside the block(as if its the first block to be run). Does this mean that the variables were lost and that I would need to train the model again?"
+Something else must be wrong then
+TAs can see if your solution is there though
+TAs should really use pins for such an answer.
+"TL;DR: always do this: decoder_outputs, hidden = decoder.forward(hidden, target_seq=target_seq_in, teacher_forcing=teacher_forcing)
+
+Okay. I have seen the same error a couple of times before. I guess there is a tiny error in the provided implementation. The error happens because when teacher_forcing=False, we forgot to handle the cases where the output length is smaller than the target sequence length, So, if you always give the target sequence as input (regardless of teacher_forcing value), it should work (edited)"
+Thank you
+"Thank you for your good answers. I was confused on multiple fronts: for some reason I was mixing up LSTM and GRU, and got confused with the layering of Pytorch."
+"Thank you for your reply. I have followed exactly the instructions that is given in the exercise. I believe this is how the task is formulated in the exercise (below). But when I read the documentation, it starts to talk about [NxC] input (minibatch and number of classes), which doesn't really make sense if you want to do it as it asked to be done.
+
+my attempt:
+loss_sum = 0
+for seq_idx, seq in enumerate(targets):
+       for word_idx, word in enumerate(seq):
+           loss_sum += criterion(decoder_outputs[word_idx][seq_idx], word)
+
+targets is a list of target tensors. (edited)"
+"Thank you, I just find it very unintuitive that the first dimension is not the batch..."
+Thanks
+Thanks @Muaali. Did you also get only one print per epoch?
+Thanks I figured it out.
+"Thanks a lot about that, got stuck for a long while there as well, could fix it with this solution"
+Thanks a lot!
+Thanks for noting that! I assume printing every i'th batch is also helpful for you to see how well training proceeds.
+Thanks!
+"Thanks, I get it"
+Thanks.
+Thanks. I'm guessing that the EOS appending should be handled in the 'evaluate' function?
+"Thanks. Is it something like this loss = torch.tensor(np.mean(l), requires_grad=True).squeeze()?"
+That is the reason why the shapes are like that.
+"The ""print every i iterations"" mechanism in 5.2 prints on every i:th batch, not every i:th data point. This is just a style thing, of course, but I thought I'd point that out, since context leads me to believe that this was not the intended function? (edited)"
+"The decoder output looks like this all the time
+ tensor([[[0.0003, 0.0003, 0.0003,  ..., 0.0003, 0.0003, 0.0004]],
+
+        [[0.0003, 0.0003, 0.0003,  ..., 0.0003, 0.0003, 0.0004]],
+
+        [[0.0003, 0.0004, 0.0002,  ..., 0.0003, 0.0004, 0.0004]],
+
+        ...,
+
+        [[0.0003, 0.0004, 0.0003,  ..., 0.0003, 0.0003, 0.0004]],
+
+        [[0.0003, 0.0004, 0.0003,  ..., 0.0003, 0.0003, 0.0003]],
+
+        [[0.0003, 0.0005, 0.0003,  ..., 0.0004, 0.0003, 0.0003]]],
+       grad_fn=<CatBackward>) 
+Which is pretty much all 1/256. The encoder output and the hidden state coming from the encoder look normal to me."
+"The efficiency of this function is not that important, right? (edited)"
+"The embedding function is similar to encoder part. You need to use view to change the shape like self.embedding(.).view(1,1,-1)"
+"The error looks weird, I will definitely look at it."
+"The loss goes up: with the debugging attempt or the suggested batch size? Compared to what? Or do you mean that it increases during the optimization? My code seems to work, but the training loss is quite a lot smaller than in part 1 of the assignment (0.46 in the first epoch, 0.28 in the last) so I'm not sure it is entirely correct. Unlike the batch variant, the original NLLLoss doesn't divide by the length of the sequence so it might be that. (edited)"
+"The outputs looks after cat like this:
+
+tensor([[[-1.8837, -2.3872, -2.3015, -2.4541, -2.2512, -2.6744, -2.4149,
+          -2.5872, -2.3370, -2.0055]],
+
+        [[-1.9005, -2.4408, -2.3184, -2.4500, -2.2457, -2.7180, -2.3911,
+          -2.5698, -2.3446, -1.9458]],
+
+        [[-1.9112, -2.4811, -2.3088, -2.4645, -2.2361, -2.7423, -2.3973,
+          -2.5580, -2.3345, -1.9143]],
+
+        [[-1.9131, -2.4892, -2.3148, -2.4670, -2.2257, -2.7500, -2.3955,
+          -2.5624, -2.3275, -1.9101]]], grad_fn=<CatBackward>)
+tensor([[[-1.9142, -2.4913, -2.3167, -2.4669, -2.2238, -2.7503, -2.3970,
+          -2.5626, -2.3243, -1.9089]],
+
+        [[-1.7465, -2.0100, -2.3059, -2.2439, -2.8402, -2.4978, -2.1159,
+          -2.4617, -2.8904, -2.4785]],
+
+        [[-2.1276, -1.8293, -2.1390, -2.4405, -2.7793, -2.6914, -2.0587,
+          -2.4450, -2.5037, -2.4139]],
+
+        [[-1.9736, -2.3402, -2.1229, -2.4509, -2.4632, -2.6584, -2.2346,
+          -2.5923, -2.2991, -2.1088]]], grad_fn=<CatBackward>)
+tensor([[[-1.9413, -2.4470, -2.2913, -2.5018, -2.2331, -2.6898, -2.3860,
+          -2.6001, -2.3071, -1.9244]], ..."
+"The parameters to nn.NLLLoss is already described heer https://pytorch.org/docs/stable/nn.html. One matrix (N,C) and one vector (N)"
+Then I will get torch.Size[1] (edited)
+"There is no test for that, and it returns a list instead of a tensor."
+There should be EOS in the third line as well. (edited)
+There was this discussion here:
+"This code is not inside a training loop, no need to optimize it. But I agree with you: try to avoid for loops when possible."
+This looks reasonable.
+"This solution was also the first thing that came to my mind, but in the end I decided to go with that pack-then-pad method. Who knows how the hidden tests may turn out? (I did get several bad grades in previous weeks by trying shortcuts and not following all the steps listed, even though my final models turned out to be good)."
+"To clarify further: GRU takes a sequence of batches of vectors, but the embedding takes only a batch of vectors. So we need to reshape it into a sequence of length 1, of batch size 1 of a vector [1, 1, -1]"
+Try another dimension for the log_softmax
+Using for loops may be inefficient sometimes. I was just wondering if this was right or if it’d be a better way to do it.
+"Very helpful! @Max, if you printed outputs of the Encoder, does it look somehow like this? (values change obviously) (edited)"
+We do need to modify the decoder from 5.1 so that it does accept different batch_sizes than one. Basically for me it was just utilizing the given value batch_size.
+"Well, based on the earlier parts of 52, [2,1] means two words that belong to the same sequence. [1,2] would be batch_size = 2, but just one word for different sequences. (edited)"
+"Well, it's just a number. The bigger it is, the more capacity your network has. But also, you are more likely to overfit. So, one usually sets hidden_size by cross-validation."
+"Well, you could try and see"
+What type and shape objects does nn.NLLLoss want? I've tried with tensors that are torch.Size([output_dictionary_size]) for y_preds and torch.Size([1]) for the class. This gives me the following error ValueError: Expected 2 or more dimensions (got 1). How should there be 2 dimensions?
+"When teacher_forcing is false, how do you call the decoder? Could you write the statement, probably something like ... = decoder(hidden,...,teacher_forcing)"
+"When you submit, files inside the exercise folder are copied into submission folder. So in theory, if your folder was fine during submission, your submission itself should be fine."
+"While implementing LogSoftmax, you need to sum over a dimension, right? If the input is a vector, then that's simple. If the input is a matrix, you can then compute the softmax along each row, or along each column - and this needs to be specified. In general, if the input is a tensor, you specify a dimension (rather than just rows and columns because you could have a 3rd, 4th, ... dimension in a tensor)"
+Will keeping these changes affect the grading??
+"Yeah @Vinn I had same issue. Reshaping the embedded 4 dimensional sequence to 3dimensional solved the problem. I just did embedded.view(pad_seqs.shape[0], -1, self.hidden_size). Which transformed its shape from [4, 2, 1, 3] to [4,2,3] (edited)"
+"Yeah that's my bad, should be target_seq=target_seq"
+"Yeah, the statement describes a property (being padded) of the input sequences, does not say you need to explicitly deal with this property in your implementation."
+Yeap
+Yes
+Yes I also get a loss about 0.11 after 20 epochs (edited)
+"You can add another cell which saves the model but do not forget to remove that cell before submission. I inserted prompting because it was a common mistake to forget to set skip_training=True and click Validate button. In that case, the model is overwritten by a random network. Be careful with that."
+"You just ignore the padded values while computing the loss, you don't need to modify decoder_outputs"
+"You need to define the correct dimension to apply softmax to, with the dim parameter. If it's wrong you get all ones."
+You should understand that pytorch develops rapidly. Some features may not have been available a few months ago. (edited)
+"ah, yeah, I’ve seen this. But I mean, is there a reasoning behind the choice of this number? What is a good number of features and do I know it?"
+already discussed in https://deep-learning-aalto.slack.com/archives/CFWL107MH/p1553869447031500
+"alright. I can check it in detail then.
+But could you explain what's the rationale behind  pin_memory=True in batch processing compared to 5.1 where it is False."
+"anyone got Expected tensor for argument #1 'indices' to have scalar type Long; but got torch.DoubleTensor instead (while checking arguments for embedding) error in the feedback, for the test_evaluate function?"
+"argmax doesn't cast anything, it simply produces integer output to begin with. The issue is not being able to fix the result; the issue is that it wasn't possible to tell there was a requirement for the type of the output before getting the feedback."
+at least there is no error regarding this
+"but I guess the label means  target_seq, not input_seq"
+"but that doesn't make sense, because then the tensor would look like tensor([x,x], [x,x], [x,x]) (edited)"
+"but this is strange, because at least for me, my implementation of evaluate in 5.1 seems basically the same as in 5.2 (which came ready). At least I don’t see any data type treatment there"
+"class Encoder(nn.Module):
+   def __init__(self, dictionary_size, hidden_size):
+       super(Encoder, self).__init__()
+       self.hidden_size = hidden_size
+       self.embedding = nn.Embedding(dictionary_size, hidden_size)
+       self.gru = nn.GRU(hidden_size, hidden_size)
+
+   def forward(self, pad_seqs, seq_lengths, hidden):
+       """"""
+       Args:
+         pad_seqs: Tensor [max_seq_length, batch_size, 1]
+         seq_lengths: list of sequence lengths
+         hidden: Tensor [1, batch_size, hidden_size]
+
+       Returns:
+         outputs: Tensor [max_seq_length, batch_size, hidden_size]
+         hidden: Tensor [1, batch_size, hidden_size]
+       """"""
+       # YOUR CODE HERE
+       pad_seqs = self.embedding(pad_seqs)
+       packed_sequence = pack_padded_sequence(pad_seqs,seq_lengths,batch_first = False)
+       input_seq = packed_sequence.data
+       in_length = input_seq.size(0)
+       outputs = []  # Collect encoder outputs at different processing steps in this list
+       el = 0
+       for batch_size in packed_sequence.batch_sizes:
+           for i in range(batch_size):
+
+               output = input_seq[el].view(1,1,-1)
+               output,hidden[:,i] = self.gru(output,
+                                             hidden[:,i].view(1,1,-1))
+               packed_sequence.data[el] = output
+               outputs.append(output)
+               el+=1
+
+       outputs = torch.cat(outputs, dim=0)
+
+#         packed_sequence.data = outputs
+       outputs = pad_packed_sequence(packed_sequence,batch_first = False)[0]
+       outputs = outputs.view(outputs.size(0),outputs.size(1),-1)
+
+       return outputs, hidden
+
+   def init_hidden(self, batch_size=1, device=device):
+       return torch.zeros(1, batch_size, self.hidden_size, device=device)"
+cool. I was just wondering if the prev_word should indeed change its shape
+could we modify this function directly:  criterion = nn.NLLLoss(reduction='none') ? Or we have to design a mask to remove paddings
+"decoder_outputs, hidden = decoder.forward(hidden, target_seq=target_seq_in, teacher_forcing=teacher_forcing), with target_seq_in set to None if teacher_forcing is False (edited)"
+did you find out what was wrong in the end?
+dim (int) – A dimension along which Softmax will be computed (so every slice along dim will sum to 1).
+"does your softmax outputs look like this
+Output Size: tensor([[[-2.3775, -2.3482, -2.3759, -2.6359, -2.0829, -2.2024, -2.3603,
+         -2.1379, -2.2240, -2.3913]]], device='cuda:0',
+      grad_fn=<LogSoftmaxBackward>)
+Output Size: tensor([[[-2.3670, -2.3870, -2.5010, -2.6020, -2.0295, -2.0717, -2.5786,
+         -2.1997, -2.1167, -2.3677]]], device='cuda:0',"
+dont use numpy in your function. use torch tensor only or else you will lose the calculated gradient when convert back and forth between tensor and np.array
+"evaluate should not really append EOS, EOS should be produced by the decoder (be part of the output sequence)"
+got it! Thank you so much @Muaali
+have you checked the outputs of the encoder and decoder? if they are random numbers?
+here's what I do for the forward in the encoder :
+https://deep-learning-aalto.slack.com/archives/CFWL107MH/p1553791581011100
+https://deep-learning-aalto.slack.com/archives/CFWL107MH/p1553856789020500
+https://deep-learning-aalto.slack.com/archives/CFWL107MH/p1554029997076600
+https://deep-learning-aalto.slack.com/archives/CFWL107MH/p1554115358133400
+i took off the clones and still didn't work
+i.e. ON with a probability of 0.5?
+"if you concatenate single outputs together, you will get outputs. The shape of outputs is given in the comments. From there, you can infer the shape of a single output."
+"in 5.1 decoder part , What shape of outputshould be before topv, topi = output[0, :].topk(1)?   Any one can help please?"
+"in 5.2, for the packed_pad_sequence, I got wrong input dimension as below. I think the output of packed_padded_sequence is in PackedSequence format which holds data and list of batch_sizes as well (), so it couldn't fit to gru cell. I have 2 parameters from the output of packed_padded_sequence plus the hidden one. So I dont understand why we I need to make it 2 here ...   Any of you got the same issue? (edited)"
+"in second part due to have padding, should we tell Embedding to ignore zero-paddings? like with using padding_idx=0 in the definition of embedding.
+Actually, encoder passed the tests, but in training part I got some index out of range error which couldn't understand why (it was on embedding part in the encoder). Then with adding aforementioned parameter in its definition the error has solved. (edited)"
+"in the first exercise, about the Encoder, can someone help me to understand the hidden_size? I don’t think I understood what this parameter means"
+kemppip2
+make sure your compute_loss() return a tensor
+"may be you can check the docs for torch.nn. Embedding and torch.nn.GRU here: https://pytorch.org/docs/stable/nn.html. Simply put, it is the number of features in the hidden state h."
+"okay, thanks.. this was the solution"
+"or at least it says that outputs-list should contain the outputs of the decoder, not GRU. In addition, in the case we accumulate outputs with the outputs of GRU, I don't see how the code ""topv, topi = output[0, :].topk(1)"" could match our y_i mapped from the hidden output."
+"out is the linear layer, and I checked that output is of shape [1,1,hidden_size]"
+"pad_sequence seems to work just fine at least for me, not requiring sequence lengths to be in descending order"
+"pad_target_seqs has shape [max_seq_length, batch_size, 1]. Here, max_seq_length and/or batch_size could be 1 or a bigger number. So, you cannot assume that the first dimension is 1."
+"pad_target_seqs_new = pad_target_seqs.clone()
+   decoder_outputs_new = decoder_outputs.clone()
+
+   max_seq_length_new = decoder_outputs_new.size(0)
+   batch_size_new =  decoder_outputs_new.size(1)
+   s = 0
+   l = []
+   for i in range(max_seq_length_new):
+       for j in range(batch_size_new):
+           if pad_target_seqs_new[i,j][0]!=padding_value:
+               s=s+1
+               l.append(criterion(decoder_outputs_new[i],pad_target_seqs_new[i].flatten())[j])
+   loss = sum(l)/s"
+"right...so if my output before the softmax layer is of shape torch.Size([1, 1, 20]), I would probably define dim so that it computes the softmax along the 20?"
+"seems to work, yes"
+thanks
+thanks! I just wanted to know if there was a better way :slightly_smiling_face:
+"the link provided could clarify this
+https://pytorch.org/tutorials/intermediate/seq2seq_translation_tutorial.html"
+"the pytorch tutorial link is kind of for logic reference. in our case, the output should have dim of [1,1,hidden_size] and should be fed as is to the linear layer (what you did original is correct). then log_softmax is applied on the last dim."
+the values of the loss should be similar to the ones from the first part
+username: khongbn1
+very much :smile:
+what is the problem with that?
+what was the problem wit softmax?
+yes for log_softmax
+"yes, I did that, too. But it also says accepts padded target sequences"
+"yes, it should be target_seq=target_seq"
+"yes, seems so"
+yes. I think so.
+you can do argmax along a specific dimension
+you can do your_tensor.squeeze() to get torch.Size([])
+you can reshape the inputs to the shapes accepted by the loss [NxC]
+"you do not need to write your username here any more, the test will be corrected for all."

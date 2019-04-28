@@ -1,0 +1,142 @@
+0
+"""5x5 kernel (the input of the layer should be 5x5)"" can someone elaborate on what this means, thanks"
+"(I know that’s not representative of  “reality” so I’m happy to accept the lost points in my own case, just that its annoying in general to be losing points when your solution was basically right but for some small detail that was very difficult to catch)"
+"(or even that the parameters need names at all - it is possible to just pass the parameters to Sequential as a list of parameters, though I suppose in that case it makes your model less debuggable)"
+"@Alexander Ilin I trained ResNet without normalizing the input values and achieved 0.911 accuracy on test images, compared to 0.908 with normalized images. I'm wondering why one would make the choice to normalize the image values, when the result can be equally good or even better without it?"
+"@Alexander Ilin Sorry I missed the message. Is there any chance to reconsider this, or could you please explain what i did wrong to clear this out? :thinking_face:"
+@Hai To (TA) so can there be more groups of blocks
+@Pashupati Hegde (TA) unfortunately I was not able to attend
+@Tuukka I think the idea was that all layers have different parameters. So you can’t reuse layers.
+"Actually it is written that BN is after conv and that ReLU is after conv. So you cannot say which is the first from that.
+
+
+
+
+I am asking this question becuase even though in Resnet it is implemented in that way, in the community there are a lot of discussions about this topic. (edited)"
+After each batchnorm.
+"Ah, I get it now. Thanks. (Link: https://pytorch.org/docs/stable/nn.html#linear-layers) (edited)"
+"And the last question, should the 1x1 conv in skip connection have bias term?"
+"And the resulting number of elements is 256=16*4*4 in that example, while the number of inputs in the linear layer is 16*5*5 = 400?"
+"Applying an  AvgPool2d with HxH kernel on an input of shape CxHxH, gives an output of size Cx1x1. I hope is useful : https://alexisbcook.github.io/2017/global-average-pooling-layers-for-object-localization/"
+Are there any tutorial sessions this week? The booking option is not available on mycourses (edited)
+"But not anymore, 502 again. Lot's of load perhaps."
+Can you check the size of the input passed to the first fc layer?
+Come to exercise session on Friday 16:15
+Could you attend the exercise session happening right now at C202?
+Error
+Especially when the network definition is basically exactly the same as the reference network on the autograder side?
+"Even though some have same parameters, you want to have different weights for all the layers"
+"For VGG, do we use ReLU after each layer in a block, or only after each block? I have consulted the Very Deep Convolutional Networks for Large-Scale Image Recognition paper and it simply says: ""The ReLU activation function is not shown for brevity."""
+"From the test above, with verbose setting i see the sizes i printed out, but yeah not from just the simple net, I guess i should tweak it if after training it doesn’t perform well?"
+Hey @Alexander Ilin shouldn’t the feedback for round 4 have 13 points as said in the first lecture? Mine has only 10 total points. (edited)
+"Hi, I'm getting size mismatch error in the 41_letnet exercise. The error comes from when the networks moves to the first fully-connected layer. I'm using 32*7*7 as the amount of input channels, is there something wrong with this?"
+"I didn't specify padding, so I suppose 0?"
+I guess so
+"I have the feeling that you still do not understand. Print the dictionary that you feed to Sequential, what else can one do with such an argument?"
+"I looked at the old versions of the assignment. We used to give more points for some tasks, but decided to adjust the numbers."
+"I mean this section of the exercise is about implementing a basic resnet architecture, so it's good that you mention that the community might have debates about this, but still i don't see your point how it is unambiguous here?"
+I recommend reading the documentation of Linear layer and the shape of input.
+I saw that too. It's actually why I became curious to see what would happen if I removed it altogether.
+I think in future it’d be useful to know what an “expected” good accuracy is as a way to flag that something may be wrong - it seems quite easy to accidentally do things like share parameters / miss an activation and get what seems like a “reasonable” accuracy and not know any better
+"I think it's pretty clear from the notebook, there's bn after each conv layer, and after it mentions if it needs relu or not"
+"I think the input dimensions should not affect padding, only kernel size"
+"I was confused because ""with"" in your quote can relate to both ""block"" and ""layer"". Also, further down it says:
+
+- 2d batch normalization after each convolutional layer
+- ReLU nonlinearity
+
+Why would the first line specify and the second one not? Also, neither batch norm, nor ReLU are technically part of a convolution layer.
+
+ANYWAY, if the assignment is made clearer it will surely not hurt the ones who already find it clear and at the same time help those who are confused. (edited)"
+I'd say it is a concern if you do not see your groups in the printout.
+"I'd say that the difference is insignificant. I would expect that the input normalization is there to combat differences in exposure and lighting conditions of the picture. The given data set has probably already been normalized, or it is naturally (almost) normal as the images are from a product catalog."
+I'll take a look.
+"I'm also wondering what this means.. I'm getting assertion error because my y is of shape 16,10 instead of 32,10.. should there be some reshaping before the global avg pooling?"
+"I'm getting an accuracy of 0.905 with VGG net, and 0.904 with ResNet. Is this alright?"
+I've updated the descriptions. Please let me know if it is still not clear
+"In 41_lenet, I didn't get point for Test Cell 3 because in 01 email, it is said that ""it is expected that a batch normalization layer comes right after a convolutional layer"", so I add nn.BatchNorm2d(32) after nn.Conv2d(16, 32, 5) (which of course affect the expected value of y). Other than that, my Net seems to be the same. Could there be a chance to reconsider this?"
+"In 41_lenet, the input to Net is a batch of 32 images (shape 32x...), and is expected to output class scores for each image in the batch (shape 32x10). So am I supposed to just iterate through the batch in forward() or is there some clever ""correct"" way to do this? (edited)"
+"In 43_resnet I'm attempting to run the tests for the Block class. However, the assertion says that my y shape is bad after the second test where the number of channels is increased. I've printed out the shape of the output before it is returned and it is the same what the assertion uses (batch_size, 32, 28,28), but the tests says the second value of the shape is 16 instead of 32."
+"In making the complete resnet, is it okay to do a resnet with static amount of blocks in the groups as instructed in the assignment or do you have to design it in a way that some hidden test would change the n_blocks = [2, 2, 2] to something else?"
+"In part 3, ResNet the instructions say ""The number of channels in the second block should be double the number of channels in the first block, the number of channels in the third block should be four times the number of channels in the first block."" However, the attached figure seems to indicate that the second and third groups should have these numbers of channels, which seems to make more sense?"
+In that case I think that the assignment should be updated as it is ambiguous.
+"In the ResNet, should we assume that the n_blocks has always 3 elements (3 groups). Also, is the 0.906 test accuracy good enough? It says it should be around 90-91 but I’m just thinking if the implementation will be graded only based on the network accuracy? (edited)"
+"In the first part, could you give any hint for calculating the required input size for the first linear layer of the convolutional network?"
+"In the useful tutorial we are given (https://pytorch.org/tutorials/beginner/blitz/neural_networks_tutorial.html#sphx-glr-beginner-blitz-neural-networks-tutorial-py), is the network correct? The input of the first linear layer mislead me quite a bit and it doesn't seem to even work if I test it."
+"Is there a mistake in the lecture slides, regarding the convolutional layer (slide 50 onwards): When we apply the convolution layer, shouldn't the x and y dimensions reduce by kernel_size - 1? Now the dimensions stay at 28 after the first conv layer, but it should be 24? At least that is what happens in the visualization tool given on slide 32, and also in the exercises. (edited)"
+"It actually seems that the comment attached to the normalization command in the code is incorrect: the data is normalized to have mean and standard deviation of 0.5, not to completely lie between -1 and 1"
+"It is your bug: you overwrite the value of your ordered dictionary dict['relu'], so effectively you have only one relu in your network. (edited)"
+"It would be less easy to make such a mistake if the API only allowed passing a list of tuples, or just tuples in *args, since internally it does not require that all parameters have different names as far as I can tell"
+Let's clarify here: in our notebooks I expect batch_norm to appear right after a conv layer
+My net
+"Nah I understand. Passing duplicate keys to the constructor of the underlying dict will cause the previous one to be overwritten, meaning that you only end up with one ReLU at the end, instead of a ReLU between each of the layers. My point was more that its easy to make a mistake like that when using OrderedDict since visually it looks as through you’re giving Sequential the layers in the right order."
+"Noticed that the issue was that I had changed the output variable from x to out, but still had return x"
+"Oh wow, seems like a rather dangerous feature of Sequential but I can see why that happened. Lesson learned I guess..."
+Ok I found what was my issue :slightly_smiling_face: just wrong input shape for the linear layer..
+"Ok, thanks for the quick reply! I think this is something that could have been mentioned, since it is kinda ambiguous, and at least I was confused by it. Also it seems that the amount of padding required to keep the dimensions same depends on the kernel size as well as the input dimensions, am I correct?"
+"Okay so, in resnet block, everything else checks out but when both the channels and the resolution changes the end result will be a size mismatch when summing the 2 paths. Debugged this by printing ofc. Can't find a mistake. Any ideas?"
+"Or we actually can’t do that? Because we reuse the same weights instead of having 9 different set of weights, right? That would make sense"
+Please come to Friday's 16:15 session
+Question about the 43_resnet block. ''If either the resolution or the number of channels change...''. Number of channels change compared to what? Does it basicly mean that if         in_channels != out_channels           -> number of channels change=?
+Should there be something more than just passing the outputs of the conv2d layers through relu and max-pooling layers?
+"So before returning:
+torch.Size([20, 32, 28, 28])
+assertion fails to:
+Bad shape of y: y.shape=torch.Size([20, 16, 28, 28])"
+"So did I understand correctly, that you are not allowed to use same layers more than once, even though the parameters are exactly the same? (I also lost a point, because of incorrect number of convolutional layers, when in practice I do have the right number of layers, just used some of them twice later in the forward section.)"
+"So then, it should be updated, because there is no mention about that in the notebook."
+Solved
+That looks good enough.
+The result
+"There are regular exercise sessions this week as well. Currently, there's one happening at C106, one could find the other slots on mycourses calendar."
+This is not a feature of Sequential but a feature of OrderedDict
+Using Sequential in this task was not a good idea in the first place.
+"Well, the fact that Sequential allows you pass OrderedDict"
+Were there many people confused by this?
+What is the order of BN and Relu in ResNet block? The notebook does not specify it unambiguously. (edited)
+What is wrong is not easy to explain here?
+"With that result you would have won the ImageNet competition in 2013, so you probably don't  have any major error in your implementation. I wouldn't stare at the last decimals as long as you are within or somewhere close to the 0.90-0.91 span given for ResNet. The training data is shuffled, so you'll probably get a different result if you run it again (I didn't bother)"
+"Yeah now it’s clear what i did wrong
+Surprising that it still managed to get good accuracy though"
+"Yeah, it's
+torch.Size([32, 32, 4, 4])
+(shape of x after the second max-pooling) (edited)"
+"Yeah, just wanted to make sure, that I understood right :+1: thanks :pray:"
+"Yeah, that is true! I did not play enough with the visualizer to realize that, my bad!"
+"Yeah, weights, that’s what I meant. :upside_down_face:"
+"Yes, now at least Jupyter is back."
+"You don't need to iterate anything (and you shouldn't because it's vectorized), you just pass it to the particular layer, just as described in the official PyTorch tutorials."
+You have the formula in the pytorch documentation. But it is something like (1+(input_size - kernel + 2 x Padding)/stride)
+"You need to reshape x before using the fully connected layer. Try x.reshape(-1, your_size) (edited)"
+You were supposed to have 9 layers with different weights. Usually weights are not shared across layers.
+"also in 42_vgg the hard architechture didn't pass but the accuracy did pass (I guess these aren't related that much as you can get same accuracy with different architectures)
+I coded it with 3 sequential blocks and a linear blocks, which is wrong I guess? (reading from other peoples answers)"
+"also, if you're interested, the ResNet paper (https://arxiv.org/pdf/1512.03385.pdf) mentions:
+""We adopt batch normalization  (BN)  [16]  right  after  each  convolution and before activation, following [16].""
+and [16] (https://arxiv.org/pdf/1502.03167.pdf#section.5) mentions:
+""in our experiments we apply it (BN) before the nonlinearity since that is where matching the first  and  second  moments  is  more  likely  to  result  in  a stable distribution. ""
+
+TMI? :sweat_smile:"
+"hi, in the 42_vgg I didnt get points for the architecture_soft test cell. Especially in this test assert n_conv_layers == 9, ""Wrong number of convolutional layers ({:d})"".format(n_conv_layers). What exactly is being test in this case? Can I know in which part of the forward I got a wrong number of layers?"
+"i just reused two of them, each on twice, so in the end in the forward funtion there are actually 9 conv layers"
+"in 41 i got 0.869 accuracy on the last test, which is just under 0.87. Could this be due to randomness? I'm pretty sure all the blocks passed validation."
+"it won't be a problem, as long as the rest of the implementation works fine. (edited)"
+"maxpool2d (in the tutorial) outputs 2D data, but the linear layer expects one-dimensional data. So you need to flatten it, preferably using  x.view. The tutorial calculates the number of elements using the function num_flat_features(), but you can just calculate it manually to make sure you understand what's going on."
+"no, it's fixed to 3"
+"since the other two basic conv layers didn't have bias terms I assumed the skips didn't need it either, but good idea to double checking"
+"the cell where we print the resnet architecture,
+# Let us print the architecture of the network
+net
+my output doesn't print my groups that I added although they are there. This isn't going to be problem right? Just making sure the output of this cell isn't used for grading or something."
+the latter one
+the slides assume that we use padding
+we must have corrected the points.
+what kind of padding did you use in the skip connection?
+works for me
+"yes, block's in_channels != block's out_channels -> change"
+"yes, looks alright"
+"yes, the comment is not quite correct . transforms.Normalize((0.5,), (0.5,)) is actually doing z-score normalization (this can help SGD to converse faster) . The original dataset is already min-max normalized to [0,1]  .  A good ref:
+https://www.codecademy.com/articles/normalization (edited)"
+"yes, there is no bias term in the skip connection"
+"you are right, I will update the instructions"
+"you got one point from the hard test, so I think it is fair. (edited)"

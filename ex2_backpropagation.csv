@@ -1,0 +1,80 @@
+0
+"**Solution:** For anyone having the same problem - make sure you do not iterate over batches inside your MLPBatch class. Since both forward and backward methods already support batch processing, it is sufficient to call them without additional looping"
+"And I still have problems as I mentioned before. First I cannot save the assignment. Second I cannot submit it. I tried several times this morning, but it is either not in the TA's record and not shown in my jupyter lab. The unexception message is displayed in my previous messages."
+"Could I get a review of this please? I still disagree about this being my mistake since I believe that I have completed the task according to the requirements (using the variable  batch_size) and I do not think that the hidden test running from a different Python scope than the rest of the notebook is a good enough reason to get a point penalty, when the underlying problem has been solved correctly."
+Do you have any ideas
+"Finally, it can save the file. I follow the HaiTo's words and remove exercise one in deeplearning folder. Then ex2 can be saved successfully."
+For saving
+For submission
+"For this MLP function, backward thing. How to approach it? I did with a=activationfuct2.backward(y)
+Then dx=activationfuc1.backward(a)
+Then dx=dy * dx
+
+Is this the right approach?
+I don't know if I have to write anything about the weight or anything"
+"From TA's record, it seems that even there is still mistake message but she got my submission. However, I still have problems with saving. I cannot modify anything."
+"Hello, I have a question about how to use the given function for numerical gradients. The example in the notebook is ""dy_num = numerical_gradient(lambda y: loss.forward(y, target), y)"", that is without an activation function. If we have a defined ""y = act_fn.forward(x)"", should we replace the y's with x's in the numerical_gradient parameters, to find the numerical gradient with respect to input? I would think yes, but somehow I only get matching results when I keep them ""y""."
+"Hello, I received a late submission penalty, even if my timestamp verifies a submission few hours early"
+"Heyy, a question about a small detail. The backward-function in MSELoss-class has to return dy in shape (xsize, ),
+but in last cell we use dy = loss.backward() and mlp.backward(dy) so that in the end we pass it to the ""linear_backward"" function which requires shape (x_size,1).
+
+This can be solved by just reshaping it in the backward function in MLPBatch-class and therefore it's not a problem. I'm just curious if this is the way to handle this."
+"Hi, Could I make sure the deadline is 6:00 a.m of coming Tuesday"
+"Hi, I met a problem. When I would like to save the file"
+"Hi, after figuring out the saving thing. I found that I cannot submit. Does anyone have some ideas about it"
+"Hi, for batch processing there are mainly two approaches of dealing with the resulting gradients - we can either sum them or take an average. In our case we’re dealing with the sum, that’s why dot products and other matrix operations can be used to get the correct shapes and results. That goes for db as well. Since for each individual batch the derivative of b wrt to the input is just a vector of ones and the resulting batch gradient is a product 1*dy, you can think of the final gradient db as of sum of individual gradients over the batches. Having that in mind, find out how to get this sum with the resulting shape (ysize,) out of the initial (batch_size, ysize) shape"
+"Hi.
+Can someone help me identify the problem in this? (edited) "
+"Hi. Bit confused about the Relu function. Do I have to call the function from above, to make c? What is my target value, if my output is from the forward function y=f(x). How am I suppose to differentiate it wrt to x for example : dc/dx = dc/dy * dy/dx.....  Where can I get that dy/dx gradient? for the Relu function.. Its super confusing. If anyone can comment on it."
+"Hi. I'm having trouble in the backprop through a linear layer exercise. If I understood correctly, the dW should equal to the dy * dy/dW. However, I'm stuck with the issue where I can't multiply these vectors together, because they have different shapes (3,) and (2,)
+
+I've tried to transpose the dy/dW but it doesn't change the shape of the vector (edited) "
+I am having difficulties using the numerical_gradients function both in ReLU and Tanh exercises. Can someone guide me how to use it properly?
+"I feel there is an error in the MLPBatch_numeric test. For me, it has failed with the trace going to linear_backward_batch(dy, x, W, b), and the line db = np.dot(dy.T, np.ones(batch_size)). The error is ValueError: shapes (1,5) and (10,) not aligned: 5 (dim 1) != 10 (dim 0), which would mean that the value of batch_size has been defined to be 10 (the value used by my own test visible during the round), even though the hidden test used the value 5."
+I got this message
+"I have a question about MLP part of the exercise: Inside class MLP in the function backward(), how do I calculate dy/dx that is needed in the multiplication with parameter ""dy""? What is the actual formula of y? (edited) "
+"I have question about linear layer that supports batch processing: We are given dy, the gradient of a loss w.r.t. outputs y, shape (batch_size, ysize). To my understanding, the shape of dy/db, the gradient of outputs w.r.t. b is shape (ysize,). Then we get db, the gradient of loss w.r.t. b from product rule: db = dy * dy/db. How can this product of shapes (batch_size, ysize) and (ysize,) result in shape (ysize,) as is defined?"
+"I have the same question. In ReLU.backward, I used vector (x > 0) instead of (self.x > 0), but for some reason my test case seemed to work. Does this have something to do with Python scoping rules (which I have no knowledge of)?
+
+I guess that the code in class method ReLu.backward finds the 'x' from the module earlier, and this is why it worked (x was used for the same purpose). What I don't understand is, why it does not work with the autograder code test_ReLU()? It seems to set x in the same way as my test case.
+
+So yes, there is a mistake, but I wonder why the autograder did not do the same scoping?"
+I missed the second exercise completely. I didn't even fetch it. I'd like to still try to solve it but it is not (anymore?) fetchable in jupyter.cs.aalto.fi?
+"I think there are some problems, but I donot know how to save this servier problem"
+I think you can just max the matrix along the columns (edited) 
+I'm confused about the MLP exercise and the activation functions defined inside init. Should the output of a layer be passed to an activation function before passing it to the next layer?
+I'm getting this as the output for the cell that compares y and dy (for batch neural network functions): (edited) 
+Im getting the numerical gradients to the diagonal of 3*3 matrix as a result. Am I using numerical_gradient() some how wrong? (edited) 
+"In linear_backward_batch(), both dy and x contain a batch of arrays, i.e. multiple samples in a matrix with shape (batch_size,ysize) and (batch_size,xsize), respectively. According to the instructions, the function should return dW of shape (ysize,xsize). That means that dW does not vary from sample to sample in the batch. However, my calculation of dW includes both dy and x which means that I don't know which sample to use. Is there a way to calculate dW without dy or x, or should I use some average value of dy and x to calculate dW? Or calculate dW for each sample, and then return an average of the dW values (that would be averaged stochastic gradient descent, I reckon)? Any hints on calculating dW for batches?"
+"Like here dy (array): Gradient of a loss wrt outputs, shape (batch_size, ysize). It probably wasn't mean to be interpreted as a variable after all, but I actively chose no to do something like dy.shape[0] because I feel it would be contrary to the what the task tells me to use; batch_size definitely looks like a variable name (especially since it is used elsewhere). This is only -1p now, but now I'm afraid that I will lose even more points in the upcoming weeks because the tasks could be interpreted in multiple ways."
+"MLP and python class. Not being very familiar with classes, but I am trying to call in the forward “x=self.fc1(x) and I get error ‘Linear’ object is not callable.
+
+I have no idea why, in the last week’s exercise this worked. Isn’t this the way the init definitions are called?"
+My last version cannot be saved until this moment
+Ok :+1::skin-tone-2:
+"Question regarding the MSELoss class and the shape test cell:
+
+Does the vector y_i represent the values of an output layer that spits out 3 values? And then t_i represents the values we expect from each neuron? And then the loss function calculates the average loss for each sample? So in the example, we have 1 sample with 3 input and output values. And we calculate the average mean square error of the sample? If we had multiple samples, then c would be a vector, consisting of the MSE of all samples?
+
+Also, during the linear layer batch calculations, why aren't the means of the weights taken? For example, db is just summed over, but why? When does the mean calculation happen, when we want to average over our batch? Or am I missing something? (edited) "
+"So, in the MLP backward I can calculate the gradients using chain rule. This has five partial derivatives from the different parts inside the network.
+The middle layers have tanh triggering function, so I need to call the backward of this class.
+These middle layers are fc1 and fc2 and they are Linear class. This class stores the neuron values in the parameter x, so I calculate the partial derivative at this value x, eg.
+self.activation_fn2.backward(self.fc2.x)
+I will use the value x, because the tanh(x) derivative is 1-(tanh(x))^2, calculated at x.
+
+Let’s look at the first middle layer which has 10 neurons. This layer has a weight matrix, let’s call it W1 (size 10x2). To calculate the derivate on the linear layer we will call
+
+dX1/dx, dW1, db1 = linear_backward(dy, self.fc1.x, self.fc1.W, self.fc1.b)
+
+But what is the dy here? Is that the gradient calculated in the next middle layer (with 20 neurons).
+
+So to calculate all the partial derivatives I need start from the output layer, then backpropagate and pass the gradient to the previous layer. When I have calculated all partials, I will multiply those together and that is the value the function will return?"
+There is no actual answer on what to do with the bias here https://deep-learning-aalto.slack.com/archives/CFXR20UQ7/p1551982930023000 except Jan and he's saying he just tried it
+What I'm using is this...
+When will we receive the feedback?
+Yes I can or np.diag(). I was just thinking if this causes some problems in automatic grading system. The first elements seems also differ with one decimal..
+"is it possible to get the grade reviewed if our answer is “technically” correct, but was marked incorrect by the autograder due to a typo (in this case, s/x/self.x/)?"
+joined #ex2_backpropagation along with 19 others.
+server
+we'll try to do it today
