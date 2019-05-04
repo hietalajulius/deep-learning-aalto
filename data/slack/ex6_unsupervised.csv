@@ -1,0 +1,25 @@
+0
+"""You may also want to update the discriminator a few times for better convergence."" Does this mean we perform the entire discriminator update operation (i.e. including generating fake data and computing loss for it) multiple times during the same epoch?"
+@Syed yes
+Any idea what could be causing this?
+Any target g_loss and jsd values we should get? (edited) 
+"At the convolutional autoencoder part in 6.1.: the tensor returned is of shape [1,1,27,27] which is close to the tested shape [1,2,28,28]. Is output_padding a correct way to address and try to keep given stride and padding values as they are in the encoder?"
+"Because you approximate it, the estimate can be negative. (edited) "
+"For the second part of 6.2, the JSD calculation does not work for me. If I remove the try/except to see what the error is, I see this, so it is apparently failing in the vstack function, so the rvs function in the AveragePDFDistribution does not work. KL seems to work fine in the small example for Gaussian distributions, perhaps I need to change something, but the function looks quite simple... (edited) "
+"Hi, has the 6.2 GAN converged for anybody? (edited) "
+"Hi, when is the current deadline for ex6? (edited) "
+"I have a similar issue. KL function returns a numpy.float64 number, but in training I get jsd = float.nan."
+"In 6.1 what are the first two dimensions representing again here? assert y.shape == torch.Size([1, 1, 28, 28])"
+"In 6.1, by ""mirroring"" the encoder, should the decoder layer output be also 784? I've done it that way and then used view to achieve the desired shape of the torch.. however, this is not valid input size in the next test"
+"In 6.2. in first part when determining the epochs, comment says ""You can increase the number of epochs if needed."" So its okay if I end up gaining good loss values and plots if I increase it to lets say 6000 epochs? Or is that already too much and indicates problems in my code?"
+"In part 6.2, when I set skip_training=True, and hit 'Validate', blank figures are displayed in place of the training progress figures. By looking at the code, this seems to be by design. Just as a sanity check though, is this really the case? :smile:"
+Is it true that KL shouldn't return a negative number?
+"Is there a tutorial tomorrow at 10am (usual time)? @Alexander Ilin mentioned a slightly different tutorial schedule for the last round, but on MyCourses it shows the usual dates."
+"It was hard to get it to converge well and I had to use 100 discriminator updates per round. With just a few updates it does capture the overall shape but is nowhere close to optimal. Epoch 996, g_loss: 0.7075, jsd: 0.0395 using 3 discriminator updates."
+I’m getting a big loss while training the first discriminator in 62_gans_mog; am I supposed to use the real data to train the discriminator as well or only the fake data?
+So if the KL returns one numpy.float64 when called directly but JSD is nan what kind of an error could it be?
+"So in 6.1 how is that convolutional autoencoder supposed to work? The input is a 28x28 picture and the hyperparameters stride=2, kernel=5, padding=2 so by http://cs231n.github.io/convolutional-networks/ the output size is calculated with W2 = (W1 - F + 2P)/S + 1 and that just does not fit. What am I missing?"
+This message was deleted.
+"We are not saving the trained discriminator and generator that uses JSD anywhere, right? So when skip training is true there is no output at all, just wanted to make sure if that is intended?"
+joined #ex6_unsupervised along with 19 others.
+next week is exam week. will the deadline for assignment 6 be extended to the week after?
