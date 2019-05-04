@@ -1,0 +1,54 @@
+0
+2019-04-16 06:00
+28-5+2*2 = 27 which was my question because it is not divisible by 2.
+:+1:
+@Alexander Ilin
+@Juho were you able to find the answer to your question?
+@zardiko1 the figures look fine to me
+"Ah, my mistake. I now actually refetched it and instead of a scalar it gives None. So progress I guess"
+"Although it's from 2 days ago, I used output_size for the ConvTranspose2D and it worked. I think it's exactly the same as using output_padding but automatic."
+Any idea what could be causing this?
+Any target g_loss and jsd values we should get? (edited)
+"At the convolutional autoencoder part in 6.1.: the tensor returned is of shape [1,1,27,27] which is close to the tested shape [1,2,28,28]. Is output_padding a correct way to address and try to keep given stride and padding values as they are in the encoder?"
+Batch size and number of channels
+Figures are almost never used for grading (though even that is possible). I would not worry. (edited)
+Have you considered implementing the other tip: You may also want to update the discriminator a few times for better convergence.
+"Hi, has the 6.2 GAN converged for anybody? (edited)"
+"Hi, when is the current deadline for ex6? (edited)"
+Hint: look what may happen if your stride is greater than one
+I am here now :slightly_smiling_face:
+"I double checked and refetched again, still a problem"
+I fixed it with float(jsd_history[-1])
+I suspect the same...
+"In 6.1 what are the first two dimensions representing again here? assert y.shape == torch.Size([1, 1, 28, 28])"
+"In 6.2. in first part when determining the epochs, comment says ""You can increase the number of epochs if needed."" So its okay if I end up gaining good loss values and plots if I increase it to lets say 6000 epochs? Or is that already too much and indicates problems in my code?"
+"In part 6.2, when I set skip_training=True, and hit 'Validate', blank figures are displayed in place of the training progress figures. By looking at the code, this seems to be by design. Just as a sanity check though, is this really the case? :smile:"
+"Is there a tutorial tomorrow at 10am (usual time)? @Alexander Ilin mentioned a slightly different tutorial schedule for the last round, but on MyCourses it shows the usual dates."
+"It was hard to get it to converge well and I had to use 100 discriminator updates per round. With just a few updates it does capture the overall shape but is nowhere close to optimal. Epoch 996, g_loss: 0.7075, jsd: 0.0395 using 3 discriminator updates."
+I’m getting a big loss while training the first discriminator in 62_gans_mog; am I supposed to use the real data to train the discriminator as well or only the fake data?
+"My loss is similar, but I have a negative jsd, does that make sense?"
+Perhaps you want the output_padding parameter of the transpose convolution.
+See second note under https://pytorch.org/docs/stable/nn.html#convtranspose2d (edited)
+So if the KL returns one numpy.float64 when called directly but JSD is nan what kind of an error could it be?
+"So in 6.1 how is that convolutional autoencoder supposed to work? The input is a 28x28 picture and the hyperparameters stride=2, kernel=5, padding=2 so by http://cs231n.github.io/convolutional-networks/ the output size is calculated with W2 = (W1 - F + 2P)/S + 1 and that just does not fit. What am I missing?"
+"So in the except part I just added the upper call print(JSD(p_data, model_dist, n=500)) and the error is that ""operands could not be broadcast together with shapes (2,250) (500,) """
+"Thanks, that helps. I guess my question then is why just not have matching parameters in the first place."
+"We are not saving the trained discriminator and generator that uses JSD anywhere, right? So when skip training is true there is no output at all, just wanted to make sure if that is intended?"
+When it goes to logpdf
+Yeah I got it to work with output_padding. But I still think hyperparameters should always be chosen in a way that this whole situation would not come up.
+"Yes, the exercise sessions. Thanks!"
+"be careful with the order of p and q in KL . If you implemented your KL correctly , this wouldnt be the case. But it seems there is a bug in the released code."
+"check the rvs outputs of both distributions, make sure the shapes match"
+did you refetch the updated one?
+i think you should use np.sum in the KL
+in C106 (Panikki)
+make sure you use the correct samples
+my data distribution is also quite far from the true distribution
+next week is exam week. will the deadline for assignment 6 be extended to the week after?
+"no, you are not saving models in that exercise (edited)"
+"yeah it became 2,250 in that rvs function. vstack did not work? so after np.flatten() it works. So does this mean I had that old version still?"
+yes it did for me
+"yes, it will"
+you are supposed to use both real and fake data to train the discriminator
+"you mean exercises? Yes, there will be. @Kunal Ghosh (TA)"
+"Äh, that none was a copy paste mistake but after fixing that still nan"
