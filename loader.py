@@ -8,14 +8,26 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from torch.nn.utils.rnn import pad_sequence
 from ast import literal_eval
+import numpy as np
 
 device = torch.device('cpu')
 
-path_to_processed = "data/dummy2.csv" 
+
+
+path_to_train = "data/large/processed_train.csv" 
+path_to_test = "data/large/processed_test.csv" 
+
+
+
+loader_batch_size_train = 512
+loader_batch_size_test = 5
 
 class CustomDataset(Dataset):
-    def __init__(self,path,train=True,mini=False):
-        self.data = pd.read_csv(path)
+    def __init__(self,train=True,mini=False):
+        if train:
+            self.data = pd.read_csv(path_to_train)
+        else:
+            self.data = pd.read_csv(path_to_test)
         if (mini):
             self.data = self.data[:1000]
              
@@ -47,10 +59,14 @@ def customCollate(list_of_samples):
     return pad_input_seqs, input_seq_lengths, targets, target_lengths
 
  
-def getLoader():
-    trainset = CustomDataset(path_to_processed,mini=True)
+def getLoader(train=True,mini=False):
+    if (train):
+        batch_size = loader_batch_size_train
+    else:
+        batch_size = loader_batch_size_test
+    trainset = CustomDataset(train,mini)
     loader = DataLoader(dataset=trainset,
-                         batch_size=4,
+                         batch_size=batch_size,
                          shuffle=True,
                          collate_fn=customCollate,
                          pin_memory=True)
