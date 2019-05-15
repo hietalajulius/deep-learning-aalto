@@ -58,12 +58,11 @@ def customCollate(list_of_samples):
     input_seqs,targets = list(zip(*list_of_samples))
     input_seq_lengths = [len(seq) for seq in input_seqs]
     targets = torch.tensor([tar for tar in targets])
-    target_lengths = [1 for tar in targets]
     padding_value = 0
     
     pad_input_seqs = pad_sequence(input_seqs, batch_first=False, padding_value=padding_value)
 
-    return pad_input_seqs, input_seq_lengths, targets, target_lengths
+    return pad_input_seqs, input_seq_lengths, targets
 
  
 def getLoader(train=True,mini=False, slack=False):
