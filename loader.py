@@ -15,28 +15,35 @@ device = torch.device('cpu')
 
 
 path_to_train = "data/large/processed_train.csv" 
-path_to_test = "data/large/processed_test.csv" 
+path_to_test = "data/large/processed_test.csv"
+path_to_slack = "data/large/slack_test.csv"
 
 
 
 loader_batch_size_train = 512
 loader_batch_size_test = 5
+loader_batch_size_slack = 1
 
 class CustomDataset(Dataset):
-    def __init__(self,train=True,mini=False):
+    def __init__(self,train=True,mini=False, slack=False):
+        self.slack = slack
         if train:
             self.data = pd.read_csv(path_to_train)
+        elif (slack):
+            self.data = pd.read_csv(path_to_slack)
         else:
             self.data = pd.read_csv(path_to_test)
-        if (mini):
-            self.data = self.data[:1000]
+
              
     def __len__(self):
         return self.data.shape[0]
     
     def __getitem__(self, idx):
         X = tensorFromIndices(self.data.indices[idx])
-        y = self.data.target[idx]
+        if (self.slack):
+            y = 1
+        else:
+            y = self.data.target[idx]
         return X,y
     
 
@@ -59,15 +66,21 @@ def customCollate(list_of_samples):
     return pad_input_seqs, input_seq_lengths, targets, target_lengths
 
  
-def getLoader(train=True,mini=False):
+def getLoader(train=True,mini=False, slack=False):
     if (train):
         batch_size = loader_batch_size_train
+    elif (slack):
+        batch_size = loader_batch_size_slack
     else:
         batch_size = loader_batch_size_test
-    trainset = CustomDataset(train,mini)
+    if (slack):
+        shuffle = False
+    else:
+        shuffle = True
+    trainset = CustomDataset(train,mini,slack)
     loader = DataLoader(dataset=trainset,
                          batch_size=batch_size,
-                         shuffle=True,
+                         shuffle=shuffle,
                          collate_fn=customCollate,
                          pin_memory=True)
     return loader
